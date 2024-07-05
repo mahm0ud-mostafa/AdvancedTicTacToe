@@ -532,8 +532,8 @@
        <rect>
         <x>10</x>
         <y>40</y>
-        <width>401</width>
-        <height>60</height>
+        <width>271</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -557,13 +557,39 @@
        <bool>true</bool>
       </property>
      </widget>
+     <widget class="QRadioButton" name="easyRadioButton">
+      <property name="geometry">
+       <rect>
+        <x>299</x>
+        <y>40</y>
+        <width>101</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Easy</string>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="hardRadioButton">
+      <property name="geometry">
+       <rect>
+        <x>300</x>
+        <y>70</y>
+        <width>101</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Hard</string>
+      </property>
+     </widget>
      <widget class="QPushButton" name="playerVsPlayerButton">
       <property name="geometry">
        <rect>
         <x>10</x>
         <y>110</y>
         <width>401</width>
-        <height>60</height>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -1377,7 +1403,7 @@
      </property>
      <property name="geometry">
       <rect>
-       <x>110</x>
+       <x>90</x>
        <y>450</y>
        <width>221</width>
        <height>31</height>
@@ -1437,7 +1463,7 @@
      </property>
      <property name="geometry">
       <rect>
-       <x>330</x>
+       <x>310</x>
        <y>450</y>
        <width>101</width>
        <height>31</height>
@@ -2366,7 +2392,7 @@
     <zorder>backButtonAccount</zorder>
    </widget>
    <widget class="QWidget" name="page_5_gameboard">
-    <widget class="QLabel" name="whoseTurnLabel">
+    <widget class="QLabel" name="gameStatusLabel">
      <property name="geometry">
       <rect>
        <x>80</x>
@@ -2378,7 +2404,7 @@
      <property name="font">
       <font>
        <family>Comic Sans MS</family>
-       <pointsize>18</pointsize>
+       <pointsize>12</pointsize>
        <italic>false</italic>
        <bold>false</bold>
        <underline>false</underline>
@@ -2386,7 +2412,7 @@
       </font>
      </property>
      <property name="text">
-      <string>Turn of player: </string>
+      <string>Game Status</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -2755,7 +2781,7 @@
      </property>
     </widget>
     <zorder>groupBox_3</zorder>
-    <zorder>whoseTurnLabel</zorder>
+    <zorder>gameStatusLabel</zorder>
     <zorder>gameNameLabelPage_2</zorder>
     <zorder>resetGameboardButton</zorder>
     <zorder>backButtonGamePage</zorder>

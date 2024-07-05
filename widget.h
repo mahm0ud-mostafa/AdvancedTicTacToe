@@ -11,6 +11,9 @@
 #include <QCryptographicHash>
 #include <QStringList>
 #include <QLineEdit>
+#include <QTimer>
+#include <QRandomGenerator>
+#include <QRadioButton>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -64,22 +67,30 @@ private slots:
     void on_deleteGameButton_clicked();
     void on_backButtonHistory_clicked();
 
+    void replayNextMove(); // Slot for replaying next move
+
 private:
     Ui::Widget *ui;
-    bool isVsAI; // Flag to indicate if the game is Player vs AI
-    QString currentUser; // Store the current logged-in user
-    QStringList moveHistory; // Track moves made during the game
+    bool isVsAI;
+    QString currentUser;
+    QStringList moveHistory;
+    QTimer *replayTimer;
+    QStringList replayMoves;
+    int replayIndex;
+
+    QString aiDifficulty;
 
     // AI-related methods
     int minimax(int board[3][3], bool isMaximizing);
     QPoint findBestMove(int board[3][3]);
     bool isMovesLeft(int board[3][3]);
     int evaluateBoard(int board[3][3]);
+    QPoint findRandomMove(int board[3][3]);
 
     // Game-related methods
     int checkWin();
     bool isBoardFull();
-    void resetBoard(); // Ensure this declaration exists
+    void resetBoard();
     QPushButton* getButton(int row, int col);
     void showWinnerMessage(int winResult);
 
@@ -96,6 +107,13 @@ private:
 
     // Toggle password visibility
     void togglePasswordVisibility(QLineEdit* lineEdit, bool visible);
+
+    // Enable and Disable gameboard functions
+    void enableGameboard();
+    void disableGameboard();
+
+    // Function to set up connections
+    void setupConnections();
 };
 
 #endif // WIDGET_H
