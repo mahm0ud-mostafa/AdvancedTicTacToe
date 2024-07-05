@@ -84,7 +84,22 @@ int main(int argc, char **argv) {
 
 ## Contributing
 
-Contributions are welcome! Please fork the repository and create a pull request with your changes.
+We welcome contributions to enhance the features and improve the code quality. Please follow these steps to contribute:
+
+1. Fork the repository.
+2. Create a new branch:
+    ```bash
+    git checkout -b feature-branch
+    ```
+3. Make your changes and commit them:
+    ```bash
+    git commit -m "Description of your changes"
+    ```
+4. Push to the branch:
+    ```bash
+    git push origin feature-branch
+    ```
+5. Create a pull request.
 
 ## License
 
@@ -97,4 +112,4 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## Contact
 
-For any questions or feedback, please reach out to [mahmoud-diasty](https://github.com/mahmoud-diasty).
+If you have any questions or feedback, please reach out to mahmoud.mustafa302@eng-st.cu.edu.eg.
