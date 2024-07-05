@@ -1,7 +1,6 @@
 #include "widget.h"
 #include "./ui_widget.h"
 #include <QMessageBox>
-#include <QCryptographicHash>
 
 char current_player = 'X';
 int board[3][3] = {0}; // 0 = empty, 1 = X, -1 = O
@@ -16,34 +15,7 @@ Widget::Widget(QWidget *parent)
     initializeDatabase();
 
     // Set the initial page to the login page
-    ui->stackedWidget->setCurrentIndex(0);
-
-    // Connect the buttons for the login page
-    connect(ui->loginButton, &QPushButton::clicked, this, &Widget::on_loginButton_clicked);
-    connect(ui->signupLoginPageButton, &QPushButton::clicked, this, &Widget::on_signupButton_clicked);
-    connect(ui->showLoginPasswordButton, &QPushButton::clicked, this, &Widget::on_showLoginPasswordButton_clicked);
-    connect(ui->noWorriesButton, &QPushButton::clicked, this, &Widget::on_noWorriesButton_clicked);
-
-    // Connect the buttons for the sign-up page
-    connect(ui->registerButton, &QPushButton::clicked, this, &Widget::on_registerButton_clicked);
-    connect(ui->showSignupPasswordButton, &QPushButton::clicked, this, &Widget::on_showSignupPasswordButton_clicked);
-    connect(ui->loginButtonSignupPage, &QPushButton::clicked, this, &Widget::on_loginButtonSignupPage_clicked);
-
-    // Connect the buttons for the game mode selection page
-    connect(ui->playerVsAiButton, &QPushButton::clicked, this, &Widget::on_playerVsAiButton_clicked);
-    connect(ui->playerVsPlayerButton, &QPushButton::clicked, this, &Widget::on_playerVsPlayerButton_clicked);
-    connect(ui->myAccountButton, &QPushButton::clicked, this, &Widget::on_myAccountButton_clicked);
-    connect(ui->myGameHistoryButton, &QPushButton::clicked, this, &Widget::on_myGameHistoryButton_clicked);
-
-    // Connect the buttons for the password reset page
-    connect(ui->resetPasswordButton, &QPushButton::clicked, this, &Widget::on_resetPasswordButton_clicked);
-    connect(ui->showResetNewPasswordButton, &QPushButton::clicked, this, &Widget::on_showResetNewPasswordButton_clicked);
-    connect(ui->backButtonReset, &QPushButton::clicked, this, &Widget::on_backButtonReset_clicked);
-
-    // Connect the buttons for the personal info page
-    connect(ui->backButtonAccount, &QPushButton::clicked, this, &Widget::on_backButtonPage4_clicked);
-    connect(ui->changePasswordButton, &QPushButton::clicked, this, &Widget::on_changePasswordButton_clicked);
-    connect(ui->logoutButtonAccount, &QPushButton::clicked, this, &Widget::on_logoutButtonAccount_clicked);
+    ui->stackedWidget->setCurrentIndex(0);  // Replace 0 with the index of your desired initial page
 
     // Connect the game board buttons
     connect(ui->pushButton_00, &QPushButton::clicked, this, &Widget::handleButtonClick);
@@ -55,230 +27,25 @@ Widget::Widget(QWidget *parent)
     connect(ui->pushButton_20, &QPushButton::clicked, this, &Widget::handleButtonClick);
     connect(ui->pushButton_21, &QPushButton::clicked, this, &Widget::handleButtonClick);
     connect(ui->pushButton_22, &QPushButton::clicked, this, &Widget::handleButtonClick);
-    connect(ui->resetGameboardButton, &QPushButton::clicked, this, &Widget::on_resetButton_clicked);
+
+    // Connect the other buttons
+    connect(ui->loginButton, &QPushButton::clicked, this, &Widget::on_loginButton_clicked);
+    connect(ui->signupButton, &QPushButton::clicked, this, &Widget::on_signupButton_clicked);
+    connect(ui->playerVsPlayerButton, &QPushButton::clicked, this, &Widget::on_playerVsPlayerButton_clicked);
+    connect(ui->playerVsAiButton, &QPushButton::clicked, this, &Widget::on_playerVsAiButton_clicked);
     connect(ui->backButtonGamePage, &QPushButton::clicked, this, &Widget::on_backButtonGamePage_clicked);
+    connect(ui->backButtonSignupPage, &QPushButton::clicked, this, &Widget::on_backButtonSignupPage_clicked);
+    connect(ui->myAccountButton, &QPushButton::clicked, this, &Widget::on_myAccountButton_clicked);
+    connect(ui->backButtonPage3, &QPushButton::clicked, this, &Widget::on_backButtonPage3_clicked);
+    connect(ui->selectXButton, &QPushButton::clicked, this, &Widget::on_selectXButton_clicked);
+    connect(ui->selectOButton, &QPushButton::clicked, this, &Widget::on_selectOButton_clicked);
+    connect(ui->backButtonPage4, &QPushButton::clicked, this, &Widget::on_backButtonPage4_clicked);
+    connect(ui->resetButton, &QPushButton::clicked, this, &Widget::on_resetButton_clicked);
 }
 
 Widget::~Widget()
 {
     delete ui;
-}
-
-// Handle the login button click
-void Widget::on_loginButton_clicked() {
-    QString username = ui->loginUsernameLineEdit->text();
-    QString password = ui->loginPasswordLineEdit->text();
-
-    if (username.isEmpty() || password.isEmpty()) {
-        QMessageBox::warning(this, "Login Failed", "Please enter both username and password.");
-        return;
-    }
-
-    if (authenticateUser(username, password)) {
-        QString welcomeMessage = "Welcome!";
-        QSqlQuery query;
-        query.prepare("SELECT firstName, lastName FROM users WHERE username = :username");
-        query.bindValue(":username", username);
-        if (query.exec() && query.next()) {
-            QString firstName = query.value(0).toString();
-            QString lastName = query.value(1).toString();
-            if (!firstName.isEmpty() || !lastName.isEmpty()) {
-                welcomeMessage = "Welcome, " + firstName + " " + lastName + "!";
-            }
-        }
-        QMessageBox::information(this, "Login Successful", welcomeMessage);
-        ui->stackedWidget->setCurrentIndex(1); // Proceed to the next page
-    } else {
-        QMessageBox::warning(this, "Login Failed", "Invalid username or password.");
-    }
-}
-
-// Handle the signup button click from the login page
-void Widget::on_signupButton_clicked() {
-    ui->stackedWidget->setCurrentIndex(2);
-}
-
-// Handle the "Show Password" button click on the login page
-void Widget::on_showLoginPasswordButton_clicked() {
-    if (ui->loginPasswordLineEdit->echoMode() == QLineEdit::Password) {
-        ui->loginPasswordLineEdit->setEchoMode(QLineEdit::Normal);
-        ui->showLoginPasswordButton->setText("Hide");
-    } else {
-        ui->loginPasswordLineEdit->setEchoMode(QLineEdit::Password);
-        ui->showLoginPasswordButton->setText("Show");
-    }
-}
-
-
-// Handle the "Forgot Password" button click
-void Widget::on_noWorriesButton_clicked() {
-    ui->stackedWidget->setCurrentIndex(3); // Go to the Forgot Password page
-}
-
-// Handle the "Player Vs AI" button click
-void Widget::on_playerVsAiButton_clicked() {
-    isVsAI = true; // Set flag to true for Player vs AI mode
-    current_player = 'X';
-    resetBoard();
-    ui->stackedWidget->setCurrentIndex(5);  // Go to the game board page directly
-    ui->whoseTurnLabel->setText("Your Turn!!");  // Display "Your Turn!!" for the user
-}
-
-// Handle the "Player Vs Player" button click
-void Widget::on_playerVsPlayerButton_clicked() {
-    isVsAI = false; // Set flag to false for Player vs Player mode
-    resetBoard();
-    ui->stackedWidget->setCurrentIndex(5);
-    ui->whoseTurnLabel->setText("Turn of Player: "+QString(current_player));
-}
-
-// Handle the "My Account" button click
-void Widget::on_myAccountButton_clicked() {
-    QSqlQuery query;
-    query.prepare("SELECT firstName, lastName, username FROM users WHERE username = :username");
-    query.bindValue(":username", currentUser); // Use the stored current user
-    if (query.exec() && query.next()) {
-        QString firstName = query.value(0).toString();
-        QString lastName = query.value(1).toString();
-        QString username = query.value(2).toString();
-
-        ui->accountFirstNameLabel->setText(firstName);
-        ui->accountLastNameLabel->setText(lastName);
-        ui->accountUsernameLabel->setText(username);
-    } else {
-        qDebug() << "Query failed!" << query.lastError();
-    }
-    ui->stackedWidget->setCurrentIndex(4); // Go to the My Account page
-}
-
-// Handle the "My Game History" button click
-void Widget::on_myGameHistoryButton_clicked() {
-    // Placeholder: Implement the logic to display the user's game history
-    QMessageBox::information(this, "My Game History", "Feature under development.");
-}
-
-// Handle the register button click
-void Widget::on_registerButton_clicked() {
-    QString username = ui->signupUsernameLineEdit->text();
-    QString password = ui->signupPasswordLineEdit->text();
-    QString firstName = ui->signupFirstNameLineEdit->text();
-    QString lastName = ui->signupLastNameLineEdit->text();
-    QString securityQuestion = ui->securityQuestionLineEdit->text();
-    QString securityAnswer = ui->securityAnswerLineEdit->text();
-
-    if (username.isEmpty() || password.isEmpty()) {
-        QMessageBox::warning(this, "Signup Failed", "Please fill in all required fields.");
-        return;
-    }
-
-    if (registerUser(username, password, firstName, lastName, securityQuestion, securityAnswer)) {
-        QMessageBox::information(this, "Signup Successful", "You have been registered.");
-        ui->stackedWidget->setCurrentIndex(0); // Go back to login page
-    } else {
-        QMessageBox::warning(this, "Signup Failed", "Could not register user.");
-    }
-}
-
-// Handle the "Show Password" button click on the sign-up page
-void Widget::on_showSignupPasswordButton_clicked() {
-    if (ui->signupPasswordLineEdit->echoMode() == QLineEdit::Password) {
-        ui->signupPasswordLineEdit->setEchoMode(QLineEdit::Normal);
-        ui->showSignupPasswordButton->setText("Hide");
-    } else {
-        ui->signupPasswordLineEdit->setEchoMode(QLineEdit::Password);
-        ui->showSignupPasswordButton->setText("Show");
-    }
-}
-
-
-// Handle the login button click on the sign-up page
-void Widget::on_loginButtonSignupPage_clicked() {
-    ui->stackedWidget->setCurrentIndex(0); // Go back to the login page
-}
-
-// Handle the reset password button click
-void Widget::on_resetPasswordButton_clicked() {
-    QString username = ui->resetUsernameLineEdit->text();
-    QString newPassword = ui->resetNewPasswordLineEdit->text();
-    QString confirmPassword = ui->resetConfirmPasswordLineEdit->text();
-    QString securityQuestion = ui->resetSecurityQuestionLineEdit->text();
-    QString securityAnswer = ui->resetSecurityAnswerLineEdit->text();
-
-    if (username.isEmpty() || newPassword.isEmpty() || confirmPassword.isEmpty() || securityQuestion.isEmpty() || securityAnswer.isEmpty()) {
-        QMessageBox::warning(this, "Reset Password Failed", "Please fill in all required fields.");
-        return;
-    }
-
-    if (newPassword != confirmPassword) {
-        QMessageBox::warning(this, "Reset Password Failed", "Passwords do not match.");
-        return;
-    }
-
-    QSqlQuery query;
-    query.prepare("SELECT * FROM users WHERE username = :username AND securityQuestion = :securityQuestion AND securityAnswer = :securityAnswer");
-    query.bindValue(":username", username);
-    query.bindValue(":securityQuestion", securityQuestion);
-    query.bindValue(":securityAnswer", securityAnswer);
-
-    if (!query.exec() || !query.next()) {
-        QMessageBox::warning(this, "Reset Password Failed", "Invalid username or security information.");
-        return;
-    }
-
-    query.prepare("UPDATE users SET password = :password WHERE username = :username");
-    query.bindValue(":password", QCryptographicHash::hash(newPassword.toUtf8(), QCryptographicHash::Sha256).toHex());
-    query.bindValue(":username", username);
-
-    if (query.exec()) {
-        QMessageBox::information(this, "Reset Password Successful", "Your password has been reset.");
-        ui->stackedWidget->setCurrentIndex(0); // Go back to the login page
-    } else {
-        QMessageBox::warning(this, "Reset Password Failed", "Could not reset password.");
-    }
-}
-
-// Handle the "Show Password" button click on the reset password page
-void Widget::on_showResetNewPasswordButton_clicked() {
-    if (ui->resetNewPasswordLineEdit->echoMode() == QLineEdit::Password) {
-        ui->resetNewPasswordLineEdit->setEchoMode(QLineEdit::Normal);
-        ui->showResetNewPasswordButton->setText("Hide");
-    } else {
-        ui->resetNewPasswordLineEdit->setEchoMode(QLineEdit::Password);
-        ui->showResetNewPasswordButton->setText("Show");
-    }
-}
-
-
-// Handle the back button click on the reset password page
-void Widget::on_backButtonReset_clicked() {
-    ui->stackedWidget->setCurrentIndex(0); // Go back to the login page
-}
-
-// Handle the back button click on the personal info page
-void Widget::on_backButtonPage4_clicked() {
-    ui->stackedWidget->setCurrentIndex(1); // Go back to the main page
-}
-
-// Handle the change password button click on the personal info page
-void Widget::on_changePasswordButton_clicked() {
-    ui->stackedWidget->setCurrentIndex(3); // Go to the password reset page
-}
-
-// Handle the logout button click on the personal info page
-void Widget::on_logoutButtonAccount_clicked() {
-    currentUser.clear(); // Clear the current user
-    ui->stackedWidget->setCurrentIndex(0); // Go back to the login page
-}
-
-// Handle the reset button click on the game board page
-void Widget::on_resetButton_clicked() {
-    resetBoard();
-    ui->stackedWidget->setCurrentIndex(5);
-}
-
-// Handle the back button click on the game board page
-void Widget::on_backButtonGamePage_clicked() {
-    ui->stackedWidget->setCurrentIndex(1); // Go back to the main page
 }
 
 void Widget::handleButtonClick()
@@ -300,11 +67,11 @@ void Widget::handleButtonClick()
         if (current_player == 'X') {
             board[row][col] = 1;
             current_player = 'O';
-            ui->whoseTurnLabel->setText(isVsAI ? "AI Turn" : "Turn of Player: " + QString(current_player));
+            ui->whoseTurnLabel->setText(isVsAI ? "AI Turn" : "Turn of Player: "+QString(current_player));
         } else {
             board[row][col] = -1;
             current_player = 'X';
-            ui->whoseTurnLabel->setText(isVsAI ? "Your Turn!!" : "Turn of Player: " + QString(current_player));
+            ui->whoseTurnLabel->setText(isVsAI ? "Your Turn!!" : "Turn of Player: "+QString(current_player));
         }
 
         int winResult = checkWin();
@@ -399,7 +166,7 @@ void Widget::resetBoard() {
         }
     }
     current_player = 'X';
-    ui->whoseTurnLabel->setText(isVsAI ? "Your Turn!!" : "Turn of Player: " + QString(current_player));
+    ui->whoseTurnLabel->setText(isVsAI ? "Your Turn!!" : "Turn of Player: "+QString(current_player));
     ui->pushButton_00->setText("");
     ui->pushButton_01->setText("");
     ui->pushButton_02->setText("");
@@ -508,9 +275,60 @@ QPoint Widget::findBestMove(int board[3][3]) {
     return bestMove;
 }
 
-#include <QCryptographicHash>
+void Widget::on_playerVsPlayerButton_clicked() {
+    isVsAI = false; // Set flag to false for Player vs Player mode
+    resetBoard();
+    ui->stackedWidget->setCurrentIndex(5);
+    ui->whoseTurnLabel->setText("Turn of Player: "+QString(current_player));
+}
 
-// Initialize the database
+void Widget::on_playerVsAiButton_clicked() {
+    isVsAI = true; // Set flag to true for Player vs AI mode
+    current_player = 'X';
+    resetBoard();
+    ui->stackedWidget->setCurrentIndex(5);  // Go to the game board page directly
+    ui->whoseTurnLabel->setText("Your Turn!!");  // Display "Your Turn!!" for the user
+}
+
+void Widget::on_backButtonGamePage_clicked() {
+    ui->stackedWidget->setCurrentIndex(1);
+}
+
+void Widget::on_backButtonSignupPage_clicked() {
+    ui->stackedWidget->setCurrentIndex(0);
+}
+
+void Widget::on_myAccountButton_clicked() {
+    ui->stackedWidget->setCurrentIndex(4);
+}
+
+void Widget::on_backButtonPage3_clicked() {
+    ui->stackedWidget->setCurrentIndex(1);
+}
+
+void Widget::on_selectXButton_clicked() {
+    current_player = 'X';
+    ui->whoseTurnLabel->setText("Your Turn!!");
+    ui->stackedWidget->setCurrentIndex(5);
+}
+
+void Widget::on_selectOButton_clicked() {
+    current_player = 'O';
+    ui->whoseTurnLabel->setText("Your Turn!!");
+    ui->stackedWidget->setCurrentIndex(5);
+}
+
+void Widget::on_backButtonPage4_clicked() {
+    ui->stackedWidget->setCurrentIndex(1);
+}
+
+void Widget::on_resetButton_clicked() {
+    resetBoard();
+    ui->stackedWidget->setCurrentIndex(5);
+}
+
+/*_________DATABASE MANAGEMENT SYSTEM_________*/
+
 void Widget::initializeDatabase() {
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName("users.db");
@@ -521,29 +339,19 @@ void Widget::initializeDatabase() {
         qDebug() << "Database: connection ok";
 
         QSqlQuery query;
-        query.exec("DROP TABLE IF EXISTS users");  // Drop the existing table if it exists
         query.exec("CREATE TABLE IF NOT EXISTS users ("
                    "id INTEGER PRIMARY KEY AUTOINCREMENT,"
                    "username TEXT NOT NULL,"
-                   "password TEXT NOT NULL,"
-                   "firstName TEXT,"
-                   "lastName TEXT,"
-                   "securityQuestion TEXT,"
-                   "securityAnswer TEXT"
+                   "password TEXT NOT NULL"
                    ")");
     }
 }
 
-// Register a new user
-bool Widget::registerUser(const QString &username, const QString &password, const QString &firstName, const QString &lastName, const QString &securityQuestion, const QString &securityAnswer) {
+bool Widget::registerUser(const QString &username, const QString &password) {
     QSqlQuery query;
-    query.prepare("INSERT INTO users (username, password, firstName, lastName, securityQuestion, securityAnswer) VALUES (:username, :password, :firstName, :lastName, :securityQuestion, :securityAnswer)");
+    query.prepare("INSERT INTO users (username, password) VALUES (:username, :password)");
     query.bindValue(":username", username);
-    query.bindValue(":password", QCryptographicHash::hash(password.toUtf8(), QCryptographicHash::Sha256).toHex()); // Hashing password
-    query.bindValue(":firstName", firstName);
-    query.bindValue(":lastName", lastName);
-    query.bindValue(":securityQuestion", securityQuestion);
-    query.bindValue(":securityAnswer", securityAnswer);
+    query.bindValue(":password", password); // Consider hashing the password
 
     if (!query.exec()) {
         qDebug() << "Error: failed to insert new user" << query.lastError();
@@ -552,12 +360,12 @@ bool Widget::registerUser(const QString &username, const QString &password, cons
     return true;
 }
 
-// Authenticate an existing user
-bool Widget::authenticateUser(const QString &username, const QString &password) {
+bool Widget::authenticateUser(const QString &username, const QString &password)
+{
     QSqlQuery query;
     query.prepare("SELECT * FROM users WHERE username = :username AND password = :password");
     query.bindValue(":username", username);
-    query.bindValue(":password", QCryptographicHash::hash(password.toUtf8(), QCryptographicHash::Sha256).toHex()); // Hashing and comparing
+    query.bindValue(":password", password); // Consider hashing and comparing
 
     if (!query.exec()) {
         qDebug() << "Error: failed to authenticate user" << query.lastError();
@@ -565,8 +373,75 @@ bool Widget::authenticateUser(const QString &username, const QString &password) 
     }
 
     if (query.next()) {
-        currentUser = username; // Store the current user
         return true;
     }
     return false;
+}
+
+
+void Widget::on_signupButton_clicked() {
+    ui->stackedWidget->setCurrentIndex(2);
+}
+
+// void Widget::on_signupButton_clicked()
+// {
+//     QString username = ui->signupUsernameLineEdit->text();
+//     QString password = ui->signupPasswordLineEdit->text();
+
+//     // Debugging: Print username and password to the console
+//     qDebug() << "Signup username:" << username;
+//     qDebug() << "Signup password:" << password;
+
+//     if (username.isEmpty() || password.isEmpty()) {
+//         QMessageBox::warning(this, "Signup Failed", "Please enter both username and password.");
+//         return;
+//     }
+
+//     if (registerUser(username, password)) {
+//         QMessageBox::information(this, "Signup Successful", "You have been registered.");
+//         ui->stackedWidget->setCurrentIndex(0); // Go back to login page
+//     } else {
+//         QMessageBox::warning(this, "Signup Failed", "Could not register user.");
+//     }
+// }
+
+
+void Widget::on_loginButton_clicked()
+{
+    QString username = ui->loginUsernameLineEdit->text();
+    QString password = ui->loginPasswordLineEdit->text();
+
+    if (username.isEmpty() || password.isEmpty()) {
+        QMessageBox::warning(this, "Login Failed", "Please enter both username and password.");
+        return;
+    }
+
+    if (authenticateUser(username, password)) {
+        QMessageBox::information(this, "Login Successful", "Welcome!");
+        ui->stackedWidget->setCurrentIndex(1); // Proceed to the next page
+    } else {
+        QMessageBox::warning(this, "Login Failed", "Invalid username or password.");
+    }
+}
+
+void Widget::on_registerButton_clicked()
+{
+    QString username = ui->signupUsernameLineEdit->text();
+    QString password = ui->signupPasswordLineEdit->text();
+
+    // Debugging: Print username and password to the console
+    qDebug() << "Signup username:" << username;
+    qDebug() << "Signup password:" << password;
+
+    if (username.isEmpty() || password.isEmpty()) {
+        QMessageBox::warning(this, "Signup Failed", "Please enter both username and password.");
+        return;
+    }
+
+    if (registerUser(username, password)) {
+        QMessageBox::information(this, "Signup Successful", "You have been registered.");
+        ui->stackedWidget->setCurrentIndex(0); // Go back to login page
+    } else {
+        QMessageBox::warning(this, "Signup Failed", "Could not register user.");
+    }
 }

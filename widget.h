@@ -8,7 +8,6 @@
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QDebug>
-#include <QCryptographicHash>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -25,42 +24,24 @@ public:
     ~Widget();
 
 private slots:
-    // Login Page
+    void handleButtonClick();
     void on_loginButton_clicked();
     void on_signupButton_clicked();
-    void on_showLoginPasswordButton_clicked();
-    void on_noWorriesButton_clicked();
-
-    // Sign-Up Page
     void on_registerButton_clicked();
-    void on_showSignupPasswordButton_clicked();
-    void on_loginButtonSignupPage_clicked();
-
-    // Main Page
-    void on_playerVsAiButton_clicked();
     void on_playerVsPlayerButton_clicked();
-    void on_myAccountButton_clicked();
-    void on_myGameHistoryButton_clicked();
-
-    // Password Reset Page
-    void on_resetPasswordButton_clicked();
-    void on_showResetNewPasswordButton_clicked();
-    void on_backButtonReset_clicked();
-
-    // Personal Info Page
-    void on_backButtonPage4_clicked();
-    void on_changePasswordButton_clicked();
-    void on_logoutButtonAccount_clicked();
-
-    // Game Board Page
-    void on_resetButton_clicked();
+    void on_playerVsAiButton_clicked();
     void on_backButtonGamePage_clicked();
-    void handleButtonClick();
+    void on_backButtonSignupPage_clicked();
+    void on_myAccountButton_clicked();
+    void on_backButtonPage3_clicked();
+    void on_selectXButton_clicked();
+    void on_selectOButton_clicked();
+    void on_backButtonPage4_clicked();
+    void on_resetButton_clicked();
 
 private:
     Ui::Widget *ui;
     bool isVsAI; // Flag to indicate if the game is Player vs AI
-    QString currentUser; // Store the current logged-in user
 
     // AI-related methods
     int minimax(int board[3][3], bool isMaximizing);
@@ -73,12 +54,13 @@ private:
     bool isBoardFull();
     void resetBoard();
     QPushButton* getButton(int row, int col);
-    void showWinnerMessage(int winResult);
+    void showWinnerMessage(int winResult); // New method to display the winner's message
 
     // Database related methods
     void initializeDatabase();
-    bool registerUser(const QString &username, const QString &password, const QString &firstName, const QString &lastName, const QString &securityQuestion, const QString &securityAnswer);
+    bool registerUser(const QString &username, const QString &password);
     bool authenticateUser(const QString &username, const QString &password);
+
 };
 
 #endif // WIDGET_H

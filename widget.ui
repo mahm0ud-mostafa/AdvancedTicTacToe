@@ -38,7 +38,7 @@
     </font>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>4</number>
    </property>
    <widget class="QWidget" name="page_0_login">
     <widget class="QGroupBox" name="groupBox">
@@ -174,9 +174,6 @@
       <property name="placeholderText">
        <string>Enter your Username</string>
       </property>
-      <property name="clearButtonEnabled">
-       <bool>true</bool>
-      </property>
      </widget>
      <widget class="QLineEdit" name="loginPasswordLineEdit">
       <property name="enabled">
@@ -220,7 +217,7 @@
        <string>Enter your Password</string>
       </property>
       <property name="clearButtonEnabled">
-       <bool>true</bool>
+       <bool>false</bool>
       </property>
      </widget>
      <widget class="QPushButton" name="loginButton">
@@ -268,7 +265,7 @@
        <bool>true</bool>
       </property>
       <property name="default">
-       <bool>true</bool>
+       <bool>false</bool>
       </property>
      </widget>
      <widget class="QPushButton" name="showLoginPasswordButton">
@@ -316,7 +313,7 @@
        <bool>true</bool>
       </property>
       <property name="default">
-       <bool>true</bool>
+       <bool>false</bool>
       </property>
      </widget>
      <widget class="QPushButton" name="noWorriesButton">
@@ -364,7 +361,7 @@
        <bool>true</bool>
       </property>
       <property name="default">
-       <bool>true</bool>
+       <bool>false</bool>
       </property>
      </widget>
      <widget class="QLabel" name="forgotPasswordLabel">
@@ -464,7 +461,7 @@
       <bool>true</bool>
      </property>
      <property name="default">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
      <property name="flat">
       <bool>false</bool>
@@ -548,7 +545,7 @@
        <bool>true</bool>
       </property>
       <property name="default">
-       <bool>true</bool>
+       <bool>false</bool>
       </property>
      </widget>
      <widget class="QPushButton" name="myAccountButton">
@@ -578,7 +575,7 @@
        <bool>true</bool>
       </property>
       <property name="default">
-       <bool>true</bool>
+       <bool>false</bool>
       </property>
      </widget>
     </widget>
@@ -658,7 +655,7 @@
        <bool>true</bool>
       </property>
       <property name="default">
-       <bool>true</bool>
+       <bool>false</bool>
       </property>
      </widget>
      <widget class="QPushButton" name="playerVsAiButton">
@@ -688,7 +685,7 @@
        <bool>true</bool>
       </property>
       <property name="default">
-       <bool>true</bool>
+       <bool>false</bool>
       </property>
      </widget>
     </widget>
@@ -771,7 +768,7 @@
        <bool>true</bool>
       </property>
       <property name="default">
-       <bool>true</bool>
+       <bool>false</bool>
       </property>
      </widget>
      <widget class="QLabel" name="signupUsernameLabel">
@@ -851,9 +848,6 @@
       <property name="placeholderText">
        <string>Enter your Username.</string>
       </property>
-      <property name="clearButtonEnabled">
-       <bool>true</bool>
-      </property>
      </widget>
      <widget class="QLineEdit" name="signupPasswordLineEdit">
       <property name="enabled">
@@ -897,7 +891,7 @@
        <string>Enter your Password.</string>
       </property>
       <property name="clearButtonEnabled">
-       <bool>true</bool>
+       <bool>false</bool>
       </property>
      </widget>
      <widget class="QPushButton" name="showSignupPasswordButton">
@@ -945,7 +939,7 @@
        <bool>true</bool>
       </property>
       <property name="default">
-       <bool>true</bool>
+       <bool>false</bool>
       </property>
      </widget>
      <widget class="QLabel" name="signupPasswordLabel">
@@ -1056,7 +1050,7 @@
        <string>Enter your Last Name.</string>
       </property>
       <property name="clearButtonEnabled">
-       <bool>true</bool>
+       <bool>false</bool>
       </property>
      </widget>
      <widget class="QLabel" name="signupFirstNameLabel">
@@ -1136,9 +1130,6 @@
       <property name="placeholderText">
        <string>Enter your First Name.</string>
       </property>
-      <property name="clearButtonEnabled">
-       <bool>true</bool>
-      </property>
      </widget>
      <widget class="QLabel" name="securityQuestionLabel">
       <property name="enabled">
@@ -1217,9 +1208,6 @@
       <property name="placeholderText">
        <string>Enter a Security Answer.</string>
       </property>
-      <property name="clearButtonEnabled">
-       <bool>true</bool>
-      </property>
      </widget>
      <widget class="QLabel" name="securityAnswerLabel">
       <property name="enabled">
@@ -1297,9 +1285,6 @@
       </property>
       <property name="placeholderText">
        <string>Enter a Security Question.</string>
-      </property>
-      <property name="clearButtonEnabled">
-       <bool>true</bool>
       </property>
      </widget>
      <widget class="Line" name="optionalPartFirstLine">
@@ -1488,7 +1473,7 @@
       <bool>true</bool>
      </property>
      <property name="default">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
      <property name="flat">
       <bool>false</bool>
@@ -1655,9 +1640,6 @@
       <property name="placeholderText">
        <string>Enter your Username.</string>
       </property>
-      <property name="clearButtonEnabled">
-       <bool>true</bool>
-      </property>
      </widget>
      <widget class="QLineEdit" name="resetSecurityQuestionLineEdit">
       <property name="enabled">
@@ -1703,9 +1685,6 @@
       <property name="placeholderText">
        <string>Enter the (Previously Defined) Security Question.</string>
       </property>
-      <property name="clearButtonEnabled">
-       <bool>true</bool>
-      </property>
      </widget>
      <widget class="QLineEdit" name="resetSecurityAnswerLineEdit">
       <property name="enabled">
@@ -1750,9 +1729,6 @@
       </property>
       <property name="placeholderText">
        <string>Enter the (Previously Defined) Security Answer.</string>
-      </property>
-      <property name="clearButtonEnabled">
-       <bool>true</bool>
       </property>
      </widget>
      <widget class="QLabel" name="resetSecurityAnswerLabel">
@@ -1863,7 +1839,7 @@
        <string>Enter a New Password.</string>
       </property>
       <property name="clearButtonEnabled">
-       <bool>true</bool>
+       <bool>false</bool>
       </property>
      </widget>
      <widget class="QPushButton" name="showResetNewPasswordButton">
@@ -1911,7 +1887,7 @@
        <bool>true</bool>
       </property>
       <property name="default">
-       <bool>true</bool>
+       <bool>false</bool>
       </property>
      </widget>
      <widget class="QLineEdit" name="resetConfirmPasswordLineEdit">
@@ -1956,7 +1932,7 @@
        <string>Repeat the New Password.</string>
       </property>
       <property name="clearButtonEnabled">
-       <bool>true</bool>
+       <bool>false</bool>
       </property>
      </widget>
      <widget class="QLabel" name="resetConfirmPasswordLabel">
@@ -1992,7 +1968,7 @@
        <bool>false</bool>
       </property>
      </widget>
-     <widget class="QPushButton" name="resetPasswordButton">
+     <widget class="QPushButton" name="backButtonPage3_2">
       <property name="geometry">
        <rect>
         <x>160</x>
@@ -2016,7 +1992,7 @@
        <bool>true</bool>
       </property>
       <property name="default">
-       <bool>true</bool>
+       <bool>false</bool>
       </property>
      </widget>
      <widget class="QPushButton" name="backButtonReset">
@@ -2043,7 +2019,7 @@
        <bool>true</bool>
       </property>
       <property name="default">
-       <bool>true</bool>
+       <bool>false</bool>
       </property>
      </widget>
     </widget>
@@ -2098,9 +2074,6 @@
      <property name="text">
       <string>Back</string>
      </property>
-     <property name="default">
-      <bool>true</bool>
-     </property>
     </widget>
     <widget class="QLabel" name="gameNameLabelPage_7">
      <property name="geometry">
@@ -2132,7 +2105,7 @@
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QPushButton" name="logoutButtonAccount">
+    <widget class="QPushButton" name="backButtonPage4_3">
      <property name="geometry">
       <rect>
        <x>330</x>
@@ -2150,9 +2123,6 @@
      </property>
      <property name="text">
       <string>Log Out</string>
-     </property>
-     <property name="default">
-      <bool>true</bool>
      </property>
     </widget>
     <widget class="QGroupBox" name="groupBox_7">
@@ -2183,7 +2153,7 @@
      <property name="checkable">
       <bool>false</bool>
      </property>
-     <widget class="QLabel" name="accountUsernameLabel_2">
+     <widget class="QLabel" name="accountUsernameLabel_3">
       <property name="enabled">
        <bool>true</bool>
       </property>
@@ -2282,7 +2252,7 @@
        <bool>false</bool>
       </property>
      </widget>
-     <widget class="QLabel" name="accountFirstNameLabel_2">
+     <widget class="QLabel" name="accountFirstNameLabel_">
       <property name="enabled">
        <bool>true</bool>
       </property>
@@ -2315,7 +2285,7 @@
        <bool>false</bool>
       </property>
      </widget>
-     <widget class="QLabel" name="accountLastNameLabel_2">
+     <widget class="QLabel" name="accountLastNameLabel_3">
       <property name="enabled">
        <bool>true</bool>
       </property>
@@ -2381,7 +2351,7 @@
        <bool>false</bool>
       </property>
      </widget>
-     <widget class="QPushButton" name="changePasswordButton">
+     <widget class="QPushButton" name="loginButton_5">
       <property name="enabled">
        <bool>true</bool>
       </property>
@@ -2419,20 +2389,20 @@
        <enum>Qt::StrongFocus</enum>
       </property>
       <property name="text">
-       <string>Change Password </string>
+       <string>Reset your Password </string>
       </property>
       <property name="autoDefault">
        <bool>true</bool>
       </property>
       <property name="default">
-       <bool>true</bool>
+       <bool>false</bool>
       </property>
      </widget>
     </widget>
     <zorder>groupBox_7</zorder>
     <zorder>backButtonAccount</zorder>
     <zorder>gameNameLabelPage_7</zorder>
-    <zorder>logoutButtonAccount</zorder>
+    <zorder>backButtonPage4_3</zorder>
    </widget>
    <widget class="QWidget" name="page_5_gameboard">
     <widget class="QLabel" name="whoseTurnLabel">
@@ -2441,7 +2411,7 @@
        <x>80</x>
        <y>80</y>
        <width>321</width>
-       <height>51</height>
+       <height>41</height>
       </rect>
      </property>
      <property name="font">
@@ -2725,10 +2695,10 @@
     <widget class="QPushButton" name="backButtonGamePage">
      <property name="geometry">
       <rect>
-       <x>0</x>
+       <x>20</x>
        <y>90</y>
        <width>61</width>
-       <height>41</height>
+       <height>31</height>
       </rect>
      </property>
      <property name="font">
@@ -2748,16 +2718,16 @@
       <bool>true</bool>
      </property>
      <property name="default">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
     </widget>
-    <widget class="QPushButton" name="resetGameboardButton">
+    <widget class="QPushButton" name="resetButton">
      <property name="geometry">
       <rect>
-       <x>420</x>
+       <x>400</x>
        <y>90</y>
        <width>61</width>
-       <height>41</height>
+       <height>31</height>
       </rect>
      </property>
      <property name="font">
@@ -2777,7 +2747,7 @@
       <bool>true</bool>
      </property>
      <property name="default">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
     </widget>
     <widget class="QGroupBox" name="groupBox_3">
@@ -2835,7 +2805,7 @@
     <zorder>pushButton_21</zorder>
     <zorder>pushButton_22</zorder>
     <zorder>backButtonGamePage</zorder>
-    <zorder>resetGameboardButton</zorder>
+    <zorder>resetButton</zorder>
     <zorder>gameNameLabelPage_2</zorder>
    </widget>
   </widget>
